@@ -1,0 +1,31 @@
+
+
+This project consists of 2 seperate programs 'oss' and 'child'. OSS is an operating system simulator which creates 3 IPC memory locations shared between it and all its children.
+Shared Memory 1) a simulated clock which updates via increments of 1 nanosecond
+Shared Memory 2) a semaphore used to control access to a critical section
+Shared Memory 3) a message to send termination details from a 'child' to the 'oss'
+
+OSS has a maximum process time (defaulted to 20 seconds), after which it will kill all children, clean up any shared memory, then terminate. 
+It also has a 2nd timer in which it will terminate itself and all children after 2seconds have passed in the simulated clock.
+
+When the OSS starts the clock, it will spawn by default 5 child processes, but is configurable to spawn up to 19. The child processes will randomly generate a time to terminate and send
+a message to OSS when it terminates. When the OSS reads the message, it will record the time in a logfile and replace the child. 
+
+If the OSS generates 100 total children before the timers are up, the program will terminate.
+
+To build this program:
+
+make oss child
+
+To run the program:
+
+oss [-h] [-s] [-t] [-l] [-c]
+
+
+
+
+Options: 
+ -h Displays usage information
+ -s Number of simulateaneous processes to create. Default is 5.
+ -t Max process time in real seconds.
+ -l Logfile name to record child process termination. Default is logfile.txt 
